@@ -1,7 +1,7 @@
 <div>
     <form method="POST" action="{{ route('generate.short-link-create') }}">
         @csrf
-        <input type="text" name="link">
+        <input type="text" name="original_link">
         <button class="btn btn-success" type="submit">Short link</button>
     </form>
 </div>

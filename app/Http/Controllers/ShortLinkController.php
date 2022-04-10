@@ -3,33 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ShortLinkStoreRequest;
-use App\Models\ShortLink;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
+use App\Services\ShortLinks\ShortLinksService;
 
 class ShortLinkController extends Controller
 {
+    private ShortLinksService $shortLinksService;
+
+    public function __construct(
+        ShortLinksService $shortLinksService
+    )
+    {
+        $this->shortLinksService = $shortLinksService;
+    }
+
     public function index(): View
     {
-        return view('shortLink', [
-           'shortLinks' => ShortLink::latest()->get()
-        ]);
+        $shortLinks = $this->shortLinksService->getShortLinks();
+        return view('shortLink', ['shortLinks' => $shortLinks]);
     }
 
     public function store(ShortLinkStoreRequest $request): RedirectResponse
     {
-        ShortLink::create([
-            'original_link' => $request->link,
-            'short_code' => Str::random(6)
-        ]);
-
+        $this->shortLinksService->createShortLink($request->all());
         return redirect()->route('generate.short-link')->with('success', 'Short link was created');
     }
 
-    public function getShortLink($link): RedirectResponse
+    public function getShortLink(string $shortLink): RedirectResponse
     {
-        $originalLink = ShortLink::where('short_code', $link)->first();
+        $originalLink = $this->shortLinksService->find($shortLink);
         $originalLink->visits++;
         $originalLink->save();
 

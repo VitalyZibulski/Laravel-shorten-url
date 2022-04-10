@@ -13,7 +13,7 @@ class ShortLinkStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class ShortLinkStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'link' => 'required|url'
+            'original_link' => 'required|url'
         ];
     }
 }
