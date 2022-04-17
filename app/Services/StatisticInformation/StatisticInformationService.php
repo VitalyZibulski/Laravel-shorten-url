@@ -3,9 +3,10 @@
 namespace App\Services\StatisticInformation;
 
 use App\Models\Link;
+use App\Models\StatisticInformation;
 use Illuminate\Http\Request;
 
-class StatisticInformation
+class StatisticInformationService
 {
     public function getStatistic(Request $request, Link $link): array
     {
@@ -16,5 +17,10 @@ class StatisticInformation
         $statisticInformation["link_id"] = $link->id;
 
         return $statisticInformation;
+    }
+
+    public function create(array $data): array
+    {
+        return StatisticInformation::create($data);
     }
 }

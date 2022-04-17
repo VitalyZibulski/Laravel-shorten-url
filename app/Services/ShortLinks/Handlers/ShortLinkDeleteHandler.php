@@ -3,13 +3,13 @@
 namespace App\Services\ShortLinks\Handlers;
 
 use App\Models\Link;
-use App\Services\ShortLinks\Repositories\ShortLinksRepositoryInterface;
+use App\Services\ShortLinks\Repositories\StatisticInformationRepositoryInterface;
 
 class ShortLinkDeleteHandler
 {
-    private ShortLinksRepositoryInterface $shortLinksRepository;
+    private StatisticInformationRepositoryInterface $shortLinksRepository;
 
-    public function __construct(ShortLinksRepositoryInterface $shortLinksRepository)
+    public function __construct(StatisticInformationRepositoryInterface $shortLinksRepository)
     {
         $this->shortLinksRepository = $shortLinksRepository;
     }

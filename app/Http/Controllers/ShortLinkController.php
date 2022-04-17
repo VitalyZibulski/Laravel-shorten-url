@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ShortLinkStoreRequest;
+use App\Services\StatisticInformation\StatisticInformationService;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Services\ShortLinks\ShortLinksService;
@@ -10,12 +12,15 @@ use App\Services\ShortLinks\ShortLinksService;
 class ShortLinkController extends Controller
 {
     private ShortLinksService $shortLinksService;
+    private StatisticInformationService $statisticInformationService;
 
     public function __construct(
-        ShortLinksService $shortLinksService
+        ShortLinksService           $shortLinksService,
+        StatisticInformationService $statisticInformationService
     )
     {
         $this->shortLinksService = $shortLinksService;
+        $this->statisticInformationService = $statisticInformationService;
     }
 
     public function index(): View
@@ -32,9 +37,15 @@ class ShortLinkController extends Controller
         return redirect()->route('generate.short-link')->with('success', 'Short link was created');
     }
 
-    public function getShortLink(string $shortLink): RedirectResponse
+    public function getShortLink(Request $request, $shortLink): RedirectResponse
     {
         $originalLink = $this->shortLinksService->find($shortLink);
+
+        if ($originalLink) {
+            $statisticInformation = $this->statisticInformationService->getStatistic($request, $shortLink);
+            $this->statisticInformationService->create($statisticInformation);
+        }
+
         $originalLink->visits++;
         $originalLink->save();
 
