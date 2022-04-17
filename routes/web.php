@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\ApiShortLinkController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/links', [ApiShortLinkController::class, 'index'])->name('generate.short-link');
+Route::post('/links', [ApiShortLinkController::class, 'store'])->name('generate.short-link-create');
+Route::get('{link}', [ApiShortLinkController::class, 'getShortLink'])->name('short.link');
