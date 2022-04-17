@@ -3,13 +3,13 @@
 namespace App\Services\ShortLinks\Handlers;
 
 use App\Models\Link;
-use App\Services\ShortLinks\Repositories\StatisticInformationRepositoryInterface;
+use App\Services\ShortLinks\Repositories\ShortLinksRepositoryInterface;
 
 class ShortLinkFindHandler
 {
-    private StatisticInformationRepositoryInterface $shortLinksRepository;
+    private ShortLinksRepositoryInterface $shortLinksRepository;
 
-    public function __construct(StatisticInformationRepositoryInterface $shortLinksRepository)
+    public function __construct(ShortLinksRepositoryInterface $shortLinksRepository)
     {
         $this->shortLinksRepository = $shortLinksRepository;
     }
