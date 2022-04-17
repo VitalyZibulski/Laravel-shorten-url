@@ -33,7 +33,7 @@ class ShortLinksService
         $this->shortLinkDeleteHandler = $shortLinkDeleteHandler;
     }
 
-    public function getShortLinks(): Collection
+    public function getList(): Collection
     {
         return $this->shortLinkGetAllHandler->handle();
     }

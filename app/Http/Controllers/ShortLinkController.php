@@ -20,7 +20,7 @@ class ShortLinkController extends Controller
 
     public function index(): View
     {
-        $shortLinks = $this->shortLinksService->getShortLinks();
+        $shortLinks = $this->shortLinksService->getList();
         return view('shortLink', ['shortLinks' => $shortLinks]);
     }
 
