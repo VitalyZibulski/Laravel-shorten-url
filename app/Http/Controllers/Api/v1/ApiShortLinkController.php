@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ShortLinkStoreRequest;
-use App\Services\StatisticInformation\StatisticInformationService;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use App\Http\Resources\LinkResource;
 use App\Services\ShortLinks\ShortLinksService;
+use App\Services\StatisticInformation\StatisticInformationService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
-class ShortLinkController extends Controller
+class ApiShortLinkController extends Controller
 {
     private ShortLinksService $shortLinksService;
     private StatisticInformationService $statisticInformationService;
@@ -23,24 +24,23 @@ class ShortLinkController extends Controller
         $this->statisticInformationService = $statisticInformationService;
     }
 
-    public function index(): View
+    public function index(): LinkResource
     {
         $shortLinks = $this->shortLinksService->getList();
-        return view('shortLink', ['shortLinks' => $shortLinks]);
+        return new LinkResource($shortLinks);
     }
 
-    public function store(ShortLinkStoreRequest $request): RedirectResponse
+    public function store(ShortLinkStoreRequest $request): LinkResource
     {
         $link = $this->shortLinksService->create($request->validated());
         $link->tags()->sync($request->tags);
 
-        return redirect()->route('generate.short-link')->with('success', 'Short link was created');
+        return new LinkResource($link);
     }
 
     public function getShortLink(Request $request, $shortLink): RedirectResponse
     {
         $originalLink = $this->shortLinksService->find($shortLink);
-
         if ($originalLink) {
             $statisticInformation = $this->statisticInformationService->getStatistic($request, $shortLink);
             $this->statisticInformationService->create($statisticInformation);
@@ -49,6 +49,6 @@ class ShortLinkController extends Controller
         $originalLink->visits++;
         $originalLink->save();
 
-        return redirect($originalLink->original_link);
+        return $originalLink->original_link;
     }
 }
