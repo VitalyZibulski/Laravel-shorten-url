@@ -26,7 +26,7 @@ class ShortLinkController extends Controller
 
     public function store(ShortLinkStoreRequest $request): RedirectResponse
     {
-        $this->shortLinksService->createShortLink($request->all());
+        $this->shortLinksService->create($request->all());
         return redirect()->route('generate.short-link')->with('success', 'Short link was created');
     }
 

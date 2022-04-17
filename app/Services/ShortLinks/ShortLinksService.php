@@ -43,7 +43,7 @@ class ShortLinksService
         return $this->shortLinkFindHandler->handle($shortLink);
     }
 
-    public function createShortLink(array $data): ShortLink
+    public function create(array $data): ShortLink
     {
         return $this->shortLinkCreateHandler->handle($data);
     }
