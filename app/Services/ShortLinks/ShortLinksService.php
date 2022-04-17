@@ -2,7 +2,7 @@
 
 namespace App\Services\ShortLinks;
 
-use App\Models\ShortLink;
+use App\Models\Link;
 use App\Services\ShortLinks\Handlers\ShortLinkCreateHandler;
 use App\Services\ShortLinks\Handlers\ShortLinkDeleteHandler;
 use App\Services\ShortLinks\Handlers\ShortLinkFindHandler;
@@ -43,17 +43,17 @@ class ShortLinksService
         return $this->shortLinkFindHandler->handle($shortLink);
     }
 
-    public function create(array $data): ShortLink
+    public function create(array $data): Link
     {
         return $this->shortLinkCreateHandler->handle($data);
     }
 
-    public function updateShortLink(ShortLink $shortLink, array $data): ShortLink
+    public function updateShortLink(Link $shortLink, array $data): Link
     {
         return $this->shortLinkUpdateHandler->handle($shortLink, $data);
     }
 
-    public function deleteUser(ShortLink $shortLink): ?bool
+    public function deleteUser(Link $shortLink): ?bool
     {
         return $this->shortLinkDeleteHandler->handle($shortLink);
     }

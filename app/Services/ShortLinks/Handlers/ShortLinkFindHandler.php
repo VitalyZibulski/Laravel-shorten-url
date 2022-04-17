@@ -2,7 +2,7 @@
 
 namespace App\Services\ShortLinks\Handlers;
 
-use App\Models\ShortLink;
+use App\Models\Link;
 use App\Services\ShortLinks\Repositories\ShortLinksRepositoryInterface;
 
 class ShortLinkFindHandler
@@ -14,7 +14,7 @@ class ShortLinkFindHandler
         $this->shortLinksRepository = $shortLinksRepository;
     }
 
-    public function handle(string $shortCode): ?ShortLink
+    public function handle(string $shortCode): ?Link
     {
         return $this->shortLinksRepository->find($shortCode);
     }

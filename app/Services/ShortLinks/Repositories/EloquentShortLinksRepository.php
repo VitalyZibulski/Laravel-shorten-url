@@ -2,33 +2,33 @@
 
 namespace App\Services\ShortLinks\Repositories;
 
-use App\Models\ShortLink;
+use App\Models\Link;
 use Illuminate\Database\Eloquent\Collection;
 
 class EloquentShortLinksRepository implements ShortLinksRepositoryInterface
 {
     public function getAll(): Collection
     {
-        return ShortLink::latest()->get();
+        return Link::latest()->get();
     }
 
-    public function find(string $shortCode): ?ShortLink
+    public function find(string $shortCode): ?Link
     {
-        return ShortLink::where('short_code', $shortCode)->first();
+        return Link::where('short_code', $shortCode)->first();
     }
 
-    public function create(array $data): ShortLink
+    public function create(array $data): Link
     {
-        return ShortLink::create($data);
+        return Link::create($data);
     }
 
-    public function update(ShortLink $shortLink, array $data): ShortLink
+    public function update(Link $shortLink, array $data): Link
     {
         $shortLink->update($data);
         return $shortLink;
     }
 
-    public function delete(ShortLink $shortLink): ?bool
+    public function delete(Link $shortLink): ?bool
     {
         return $shortLink->delete();
     }

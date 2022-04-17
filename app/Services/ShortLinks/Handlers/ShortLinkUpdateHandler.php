@@ -2,7 +2,7 @@
 
 namespace App\Services\ShortLinks\Handlers;
 
-use App\Models\ShortLink;
+use App\Models\Link;
 use App\Services\ShortLinks\Repositories\ShortLinksRepositoryInterface;
 
 class ShortLinkUpdateHandler
@@ -14,7 +14,7 @@ class ShortLinkUpdateHandler
         $this->shortLinksRepository = $shortLinksRepository;
     }
 
-    public function handle(ShortLink $shortLink, array $data): ShortLink
+    public function handle(Link $shortLink, array $data): Link
     {
         return $this->shortLinksRepository->update($shortLink, $data);
     }

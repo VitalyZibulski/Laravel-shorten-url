@@ -2,7 +2,7 @@
 
 namespace App\Services\ShortLinks\Handlers;
 
-use App\Models\ShortLink;
+use App\Models\Link;
 use App\Services\ShortLinks\Repositories\ShortLinksRepositoryInterface;
 
 class ShortLinkDeleteHandler
@@ -14,7 +14,7 @@ class ShortLinkDeleteHandler
         $this->shortLinksRepository = $shortLinksRepository;
     }
 
-    public function handle(ShortLink $shortLink): ?bool
+    public function handle(Link $shortLink): ?bool
     {
         return $this->shortLinksRepository->delete($shortLink);
     }
